@@ -1,0 +1,17 @@
+#!/bin/bash
+
+curdir=$(pwd);
+
+if [ -n "$1" ]; then
+	dir=$1;
+fi
+
+echo src dir is $dir;
+cd $dir
+rm -rf /root/rpmbuild/RPMS/*
+make rpm
+cd $curdir
+rm -rf pacemaker_rpms
+mkdir pacemaker_rpms
+mv -f /root/rpmbuild/RPMS/x86_64/* pacemaker_rpms/
+
