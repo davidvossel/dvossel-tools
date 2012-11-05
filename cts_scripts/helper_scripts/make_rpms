@@ -6,12 +6,14 @@ if [ -n "$1" ]; then
 	dir=$1;
 fi
 
+rpmdir=$curdir/pacemaker_rpms/
+
 echo src dir is $dir;
 cd $dir
 rm -rf /root/rpmbuild/RPMS/*
 make rpm
 cd $curdir
-rm -rf pacemaker_rpms
-mkdir pacemaker_rpms
-mv -f /root/rpmbuild/RPMS/x86_64/* pacemaker_rpms/
+rm -rf $rpmdir
+mkdir $rpmdir
+mv -f /root/rpmbuild/RPMS/x86_64/* $rpmdir
 
