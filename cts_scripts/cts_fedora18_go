@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python ./cts_setup.py -n "18node1 18node2 18node3" -s "/home/dvossel/pacemaker_vossel" -c "coro" -l "fedora18" -p "$1"

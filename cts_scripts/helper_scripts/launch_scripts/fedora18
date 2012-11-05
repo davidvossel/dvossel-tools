@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/share/pacemaker/tests/cts/CTSlab.py --outputfile "/home/dvossel/cts.log" --nodes '18node1 18node2 18node3' -r --stonith "rhcs" -c --stack "mcp" --at-boot 0 $1
