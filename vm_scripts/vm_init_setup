@@ -1,0 +1,57 @@
+#!/bin/bash
+
+yum groupinstall -y 'Development Tools'
+yum install -y @development-tools
+yum install -y fedora-packager
+yum install -y vim-enhanced
+yum install -y sysconftool.noarch
+yum install -y mock
+yum install -y pam-devel
+yum install -y uuid-devel
+yum install -y libuuid-devel
+yum install -y nss-devel
+yum install -y sysconftool.noarch
+yum install -y autoconf-archive.noarch
+yum install -y libxslt-devel
+yum install -y ncurses-devel
+yum install -y openssh-server
+yum install -y nmap
+yum install -y pam-devel
+yum install -y libtool-ltdl-devel
+yum install -y glib2-devel
+yum install -y bzip2-devel
+yum install -y fence-agents
+yum install -y mock
+yum install -y pdsh
+yum install -y fence-virtd-multicast
+yum install -y fence-virtd-libvirt
+yum install -y libqb-devel
+yum install -y libqb
+yum install -y corosynclib-devel
+yum install -y corosync
+yum install -y python-devel
+yum install -y gnutls-devel
+yum install -y openssl-devel
+yum install -y libselinux-devel
+yum install -y docbook-style-xsl
+yum install -y help2man
+yum install -y krb5-workstation
+
+chkconfig sshd on
+chkconfig iptables off
+chkconfig ip6tables off
+systemctl disable iptables
+systemctl disable ip6tables
+
+sed -i.bak "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
+
+export CLUSTER_USER=hacluster
+export CLUSTER_GROUP=haclient
+getent group ${CLUSTER_GROUP} >/dev/null || groupadd -r ${CLUSTER_GROUP}
+getent passwd ${CLUSTER_USER} >/dev/null || useradd -r -g ${CLUSTER_GROUP} -d /var/log/cluster/ -s /sbin/nologin -c "cluster user" ${CLUSTER_USER}
+
+cat vm_hosts >> /etc/hosts
+
+cp vimrc /etc/vimrc
+
+./add_user dvossel

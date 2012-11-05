@@ -1,0 +1,8 @@
+#!/bin/bash
+
+adduser -m $1
+passwd $1
+
+chmod +w /etc/sudoers
+echo $1' ALL=(ALL) ALL' >> /etc/sudoers
+chmod -w /etc/sudoers
