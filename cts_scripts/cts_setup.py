@@ -2,6 +2,7 @@
 import os
 import sys
 import subprocess
+import shlex
 
 class TestOptions:
 	def __init__(self):
@@ -28,6 +29,7 @@ class TestOptions:
 				self.options['src-dir'] = 1
 			elif args[i] == "-n":
 				self.options['nodes'] = args[i+1]
+				print "installing on nodes %s" % self.options['nodes']
 				skip = 1
 			elif args[i] == "-c":
 				self.options['stack'] = args[i+1]
@@ -46,7 +48,8 @@ def main(argv):
 
 	#build rpms
 	if o.options['build'] == "true":
-		os.system("./make_rpms %s" % o.options['src-dir'])
+		builder = subprocess.Popen(shlex.split("./make_rpms %s" % o.options['src-dir']))
+		builder.wait()
 
 	#clean nodes and send rpms out
 	if o.options['nodes'] != "" :
