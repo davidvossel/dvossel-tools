@@ -54,4 +54,11 @@ cat vm_hosts >> /etc/hosts
 
 cp vimrc /etc/vimrc
 
-./add_user dvossel
+adduser -m dvossel
+passwd dvossel
+
+chmod +w /etc/sudoers
+echo 'dvossel ALL=(ALL) ALL' >> /etc/sudoers
+chmod -w /etc/sudoers
+
+
