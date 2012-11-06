@@ -88,6 +88,8 @@ def run_clean(host, o):
 		os.system("python %s/corosync2_cfg_gen.py %s" % (prefix, o.options['nodes']))
 		os.system("scp corosync.conf %s:/etc/corosync/corosync.conf" % (host))
 
+	os.system("scp pacemaker.sysconfig %s:/etc/sysconfig/pacemaker" % (host))
+
 	os.system("python %s/mis_setup.py %s" % (prefix, host))
 
 if __name__=="__main__":
