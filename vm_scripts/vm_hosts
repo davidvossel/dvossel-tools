@@ -1,10 +1,10 @@
 192.168.122.6  docbuilder
 
-192.168.122.50 rhel6-base
-192.168.122.50 rhel6-builder
-192.168.122.51 rhel6-node1
-192.168.122.52 rhel6-node2
-192.168.122.53 rhel6-node3
+192.168.122.51  rhel-builder1
+192.168.122.52  rhel-builder2
+192.168.122.91 rhel-node1
+192.168.122.92 rhel-node2
+192.168.122.93 rhel-node3
 
 192.168.122.70  17base
 192.168.122.71  17node1
