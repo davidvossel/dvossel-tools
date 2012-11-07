@@ -12,6 +12,7 @@ def main(argv):
 
 def run_kill(host):
 	os.system("ssh -l \"root\" %s killall -q -9 corosync aisexec heartbeat pacemakerd ccm stonithd ha_logd lrmd crmd pengine attrd pingd mgmtd cib fenced dlm_controld gfs_controld" % host)
+	os.system("ssh -l \"root\" %s \"service cman stop\"" % host)
 	os.system("ssh -l \"root\" %s \"service corosync stop\"" % host)
 	os.system("ssh -l \"root\" %s \"service pacemaker stop\"" % host)
 

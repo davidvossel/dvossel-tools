@@ -3,7 +3,7 @@ import os
 import sys
 
 def main(argv):
-	nodes = 1;
+	nodes = 1
 
 	if len(argv) > 3:
 		nodes = len(argv) - 2;

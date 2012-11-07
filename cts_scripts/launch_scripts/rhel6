@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/share/pacemaker/tests/cts/CTSlab.py --outputfile /var/log/cts.log --nodes 'rhel-node1 rhel-node2 rhel-node3' -r --stonith "rhcs" -c --stack "cman" --at-boot 0 $1
