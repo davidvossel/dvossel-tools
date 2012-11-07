@@ -1,0 +1,37 @@
+#!/bin/bash
+
+curdir=$(pwd);
+
+if [ -n "$1" ]; then
+	dir=$1;
+fi
+
+rpmdir=$curdir/pacemaker_rpms/
+
+echo src dir is $dir;
+
+rm -rf /root/rpmbuild/RPMS/*
+rm -rf /root/rpmbuild/SPECS/*
+rm -rf /root/rpmbuild/SOURCES/*
+rm -rf /root/rpmbuild/SRPMS/*
+rm -rf /root/rpmbuild/BUILD/*
+rm -rf /root/rpmbuild/BUILDROOT/*
+
+cd $dir
+rm -f *.tar.gz
+make export;
+
+rev=$(find *.tar.gz | sed s/ClusterLabs-pacemaker-// | sed s/\.tar\.gz// | awk '{print $1}')
+echo $rev
+cp *.tar.gz /root/rpmbuild/SOURCES/
+
+cd $curdir
+cp rhel_pacemaker.spec /root/rpmbuild/SPECS/pacemaker.spec
+sed -i.sed 's/ADDVERSION/%global upstream_version '$rev'/g' /root/rpmbuild/SPECS/pacemaker.spec
+
+rpmbuild -ba /root/rpmbuild/SPECS/pacemaker.spec
+
+rm -rf $rpmdir
+mkdir $rpmdir
+mv -f /root/rpmbuild/RPMS/x86_64/* $rpmdir
+

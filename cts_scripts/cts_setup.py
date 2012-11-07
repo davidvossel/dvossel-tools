@@ -10,6 +10,8 @@ class TestOptions:
 		self.options['show-usage'] = 0
 		self.options['src-dir'] = "/home/dvossel/pacemaker_vossel"
 		self.options['build'] = 0
+		self.options['rhel_build'] = 0
+		self.options['host_install'] = 0
 		self.options['nodes'] = ""
 		self.options['stack'] = ""
 		self.options['launch_script'] = ""
@@ -26,6 +28,10 @@ class TestOptions:
 				self.options['show-usage'] = 1
 			elif args[i] == "-b":
 				self.options['build'] = 1
+			elif args[i] == "-r":
+				self.options['rhel_build'] = 1
+			elif args[i] == "-i":
+				self.options['host_install'] = 1
 			elif args[i] == "-s":
 				self.options['src-dir'] = args[i+1]
 				skip = 1
@@ -49,18 +55,43 @@ class TestOptions:
 		print "\t [-n]                       nodes"
 		print "\t [-s]                       src dir"
 		print "\t [-b]                       fedora build and distribute rpms"
+		print "\t [-r]                       rhel build and distribute rpms"
+		print "\t [-i]                       install rpms on host"
 		print "\t [-c]                       stack"
 		print "\t [-p]                       launch parameters"
 		print "\t [-l]                       launch script"
+
+def output_from_command(command, no_wait=0):
+	test = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+
+	if no_wait == 0:
+		test.wait()
+	else:
+		return 0
+
+	return test.communicate()[0].split("\n")
 
 def main(argv):
 	o = TestOptions()
 	o.build_options(argv)
 
+	curdir = os.getcwd();
+	prefix = "%s/helper_scripts" % curdir
+
 	#build rpms
 	if o.options['build']:
-		builder = subprocess.Popen(shlex.split("helper_scripts/make_rpms %s" % o.options['src-dir']))
+		builder = subprocess.Popen(shlex.split("helper_scripts/fedora_make_rpms %s" % o.options['src-dir']))
 		builder.wait()
+
+	if o.options['rhel_build']:
+		builder = subprocess.Popen(shlex.split("helper_scripts/rhel_make_rpms %s" % o.options['src-dir']))
+		builder.wait()
+
+	if o.options['build'] or o.options['rhel_build'] and o.options['host_install']:
+		our_uname = output_from_command("uname -n")
+		if our_uname:
+			our_uname = our_uname[0]
+		os.system("python %s/install_cluster_rpms.py %s/pacemaker_rpms %s" % (prefix, curdir, our_uname))
 
 	#clean nodes and send rpms out
 	if o.options['nodes'] != "" :
@@ -81,7 +112,8 @@ def run_clean(host, o):
 
 	os.system("python %s/kill_cluster.py %s" % (prefix, host))
 	os.system("python %s/clear_cluster_cache.py %s" % (prefix, host))
-	if o.options['build']:
+
+	if o.options['build'] or o.options['rhel_build']:
 		os.system("python %s/install_cluster_rpms.py %s/pacemaker_rpms %s" % (prefix, curdir, host))
 
 	if o.options['stack'] == "coro":
