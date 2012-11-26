@@ -87,7 +87,7 @@ def main(argv):
 		builder = subprocess.Popen(shlex.split("helper_scripts/rhel_make_rpms %s" % o.options['src-dir']))
 		builder.wait()
 
-	if o.options['build'] or o.options['rhel_build'] and o.options['host_install']:
+	if (o.options['build'] or o.options['rhel_build']) and o.options['host_install']:
 		our_uname = output_from_command("uname -n")
 		if our_uname:
 			our_uname = our_uname[0]
