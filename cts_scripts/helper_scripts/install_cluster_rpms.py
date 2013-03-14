@@ -12,7 +12,7 @@ def main(argv):
 
 def cluster_rpms(host, path):
 
-	os.system("ssh -l root %s yum remove -y pacemaker pacemaker-cli pacemaker-cluster-libs pacemaker-cts pacemaker-debuginfo pacemaker-doc pacemaker-libs pacemaker-libs-devel" % host)
+	os.system("ssh -l root %s yum remove -y pacemaker pacemaker-cli pacemaker-cluster-libs pacemaker-cts pacemaker-debuginfo pacemaker-doc pacemaker-libs pacemaker-libs-devel pacemaker-remote" % host)
 	os.system("ssh -l root %s yum remove -y /root/cluster_rpms/*.rpm" % host)
 
 	os.system("ssh -l root %s rm -rf /root/cluster_rpms" % host)

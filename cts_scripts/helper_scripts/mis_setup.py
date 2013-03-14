@@ -15,7 +15,7 @@ def mis_cluster_setup(host):
 	os.system("ssh -l \"root\" %s mkdir /etc/cluster" % host)
 	os.system("scp /etc/cluster/fence_xvm.key %s:/etc/cluster/fence_xvm.key" % host)
 
-	os.system("ssh -l \"root\" %s chkconfig libvirtd off" % host)
+###	os.system("ssh -l \"root\" %s chkconfig libvirtd off" % host)
 
 	os.system("ssh -l \"root\" %s chown :root /var/log/cluster" % host)
 	os.system("ssh -l \"root\" %s chmod 776 /var/log/cluster/" % host)
