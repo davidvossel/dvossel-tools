@@ -22,7 +22,8 @@ class TestOptions:
 				skip = 0
 				continue
 			elif args[i] == "-h" or args[i] == "--help":
-				self.options['show-usage'] = 1
+				self.show_usage()
+				sys.exit(0)
 			elif args[i] == "-b":
 				self.options['build'] = 1
 			elif args[i] == "-r":
