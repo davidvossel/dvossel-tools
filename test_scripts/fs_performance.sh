@@ -32,6 +32,8 @@ cleanup()
 	done
 	losetup -d $device
 	rm -rf /tmp/fs_test
+
+	systemctl stop nfs-server.service
 }
 
 check_not_running()
@@ -84,7 +86,37 @@ test2()
 	export OCF_RESKEY_export="/"
 	export OCF_RESKEY_fstype=nfs4
 
-	echo "Timing $iterations iterations of fs.sh start/stop"
+	mkdir -
+	echo "/tmp/fs_test/fake3  192.168.122.80/24(rw,fsid=0,no_subtree_check,sync)" > /etc/exports
+
+	systemctl start nfs-server.service
+
+	echo "Timing $iterations iterations of netfs.sh start/stop"
+	start=$(date +"%s")
+	for i in $(seq $iterations)
+	do
+		exec "start" "$i"
+		exec "monitor" "$i"
+		exec "stop" "$i"
+		check_not_running
+	done
+	end=$(date +"%s")
+	time=$(($end - $start))
+	echo "Test done.  ${time}s"
+
+	systemctl stop nfs-server.service
+}
+
+
+test3()
+{
+	agent="/usr/lib/ocf/resource.d/heartbeat/Filesystem"
+	export OCF_ROOT=/usr/lib/ocf
+	export OCF_RESKEY_device=$device
+	export OCF_RESKEY_directory=/tmp/fs_test/mount
+	export OCF_RESKEY_fstype=ext4
+
+	echo "Timing $iterations iterations of Filesystem start/stop"
 	start=$(date +"%s")
 	for i in $(seq $iterations)
 	do
@@ -103,4 +135,5 @@ cleanup
 setup
 test1
 #test2
+test3
 cleanup
