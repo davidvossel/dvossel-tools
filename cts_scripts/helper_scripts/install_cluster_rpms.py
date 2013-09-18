@@ -19,7 +19,7 @@ def cluster_rpms(host, path):
 	os.system("ssh -l root %s mkdir /root/cluster_rpms" % host)
 
 	os.system("scp -r %s/* root@%s:/root/cluster_rpms" % (path, host))
-	os.system("ssh -l root %s yum install -y /root/cluster_rpms/*.rpm" % host)
+	os.system("ssh -l root %s rpm -Uvh /root/cluster_rpms/*.rpm" % host)
 
 if __name__=="__main__":
 	main(sys.argv)

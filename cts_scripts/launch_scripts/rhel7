@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/share/pacemaker/tests/cts/CTSlab.py --outputfile /var/log/cts.log --nodes 'rhel7-node1 rhel7-node2 rhel7-node3 rhel7-node4 rhel7-node5 rhel7-node6 rhel7-node7 rhel7-node8' -r --stonith "rhcs" -c --stack "mcp" --at-boot 0 $1

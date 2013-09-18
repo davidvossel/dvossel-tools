@@ -11,7 +11,7 @@ def main(argv):
 
 #place for random setup environment stuff nodes need for cts
 def mis_cluster_setup(host):
-	os.system("ssh -l root %s yum install -y fence-virt fence-virtd-multicast qarsh-server xinetd fence-virtd-libvirt nmap" % host)
+	os.system("ssh -l root %s yum install -y fence-virt fence-virtd-multicast qarsh-server xinetd fence-virtd-libvirt nmap resource-agents pcs" % host)
 	os.system("ssh -l \"root\" %s mkdir /etc/cluster" % host)
 	os.system("scp /etc/cluster/fence_xvm.key %s:/etc/cluster/fence_xvm.key" % host)
 
