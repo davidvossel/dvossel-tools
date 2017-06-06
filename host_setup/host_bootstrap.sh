@@ -5,6 +5,8 @@ install_user=dvossel
 home_dir=/home/$install_user
 go_dir=$home_dir/go
 
+setenforce 0
+sed -i "s/^SELINUX=.*/SELINUX=permissive/" /etc/selinux/config
 
 echo "SETTING SUDOERS"
 echo "$install_user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -54,3 +56,6 @@ newgrp libvirt
 gpasswd -a $install_user vagrant
 
 cd $home_dir
+
+echo "export VAGRANT_CACHE_RPM=true" >> .bashrc
+echo "export VAGRANT_CACHE_DOCKER=true" >> .bashrc
