@@ -59,3 +59,8 @@ cd $home_dir
 
 echo "export VAGRANT_CACHE_RPM=true" >> .bashrc
 echo "export VAGRANT_CACHE_DOCKER=true" >> .bashrc
+
+# nested virtualization
+sudo rmmod kvm-intel
+sudo sh -c "echo 'options kvm-intel nested=y' >> /etc/modprobe.d/dist.conf"
+sudo modprobe kvm-intel
