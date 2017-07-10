@@ -60,6 +60,9 @@ cd $home_dir
 echo "export VAGRANT_CACHE_RPM=true" >> .bashrc
 echo "export VAGRANT_CACHE_DOCKER=true" >> .bashrc
 
+#dnf install kernel-devel kernel-headers gcc dkms acpid
+#http://us.download.nvidia.com/XFree86/Linux-x86_64/381.22/NVIDIA-Linux-x86_64-381.22.run
+
 # nested virtualization
 sudo rmmod kvm-intel
 sudo sh -c "echo 'options kvm-intel nested=y' >> /etc/modprobe.d/dist.conf"
