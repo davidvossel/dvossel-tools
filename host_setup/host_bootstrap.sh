@@ -21,7 +21,7 @@ echo "%vagrant ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD_CHECK, VAG
 
 echo "INSTALLING RPMS"
 dnf update -y
-dnf install -y sudo vim vagrant vagrant-cachier libvirt make qemu-system-x86 libguestfs-tools-c expect nfs-utils golang libvirt-devel vim-go ctags
+dnf install -y sudo vim vagrant vagrant-cachier libvirt make qemu-system-x86 libguestfs-tools-c expect nfs-utils golang libvirt-devel vim-go ctags xz
 
 systemctl enable nfs-server
 systemctl disable firewalld
