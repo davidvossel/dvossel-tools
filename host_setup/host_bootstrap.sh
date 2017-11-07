@@ -43,7 +43,7 @@ echo "GOPATH SET TO $PWD"
 echo "INSTALLING GO DEPS"
 # Use goimports for package import ordering
 go get golang.org/x/tools/cmd/goimports
-go get github.com/Masterminds/glide
+go get -u github.com/golang/dep/cmd/dep
 go get -u github.com/golang/mock/gomock
 go get -u github.com/rmohr/mock/mockgen
 go get -u github.com/rmohr/go-swagger-utils/swagger-doc
