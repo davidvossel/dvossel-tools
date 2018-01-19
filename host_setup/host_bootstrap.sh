@@ -21,7 +21,7 @@ echo "%vagrant ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD_CHECK, VAG
 
 echo "INSTALLING RPMS"
 dnf update -y
-dnf install -y sudo vim vagrant vagrant-cachier libvirt make qemu-system-x86 libguestfs-tools-c expect nfs-utils golang libvirt-devel vim-go ctags xz
+dnf install -y sudo docker rsync vim vagrant vagrant-cachier libvirt make qemu-system-x86 libguestfs-tools-c expect nfs-utils golang libvirt-devel vim-go ctags xz
 
 systemctl enable nfs-server
 systemctl disable firewalld
@@ -58,6 +58,8 @@ cd $home_dir
 
 echo "export VAGRANT_CACHE_RPM=true" >> .bashrc
 echo "export VAGRANT_CACHE_DOCKER=true" >> .bashrc
+echo "alias kubectl=\"cluster/kubectl.sh\"" >> .bashrc
+echo "alias virtctl=\"bin/virtctl\"" >> .bashrc
 
 #dnf install kernel-devel kernel-headers gcc dkms acpid
 #http://us.download.nvidia.com/XFree86/Linux-x86_64/381.22/NVIDIA-Linux-x86_64-381.22.run
@@ -66,3 +68,6 @@ echo "export VAGRANT_CACHE_DOCKER=true" >> .bashrc
 sudo rmmod kvm-intel
 sudo sh -c "echo 'options kvm-intel nested=y' >> /etc/modprobe.d/dist.conf"
 sudo modprobe kvm-intel
+
+sudo groupadd docker
+sudo usermod -aG docker dvossel
