@@ -59,7 +59,7 @@ cd $home_dir
 echo "export VAGRANT_CACHE_RPM=true" >> .bashrc
 echo "export VAGRANT_CACHE_DOCKER=true" >> .bashrc
 echo "alias kubectl=\"cluster/kubectl.sh\"" >> .bashrc
-echo "alias virtctl=\"bin/virtctl\"" >> .bashrc
+echo "alias virtctl=\"_out/cmd/virtctl/virtctl\"" >> .bashrc
 
 #dnf install kernel-devel kernel-headers gcc dkms acpid
 #http://us.download.nvidia.com/XFree86/Linux-x86_64/381.22/NVIDIA-Linux-x86_64-381.22.run
